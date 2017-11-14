@@ -1,0 +1,5 @@
+1. Clone to `~/.emacs.d`.
+2. Start emacs.
+3. `M-x package-install-selected-packages` to install any missing packages.
+4. Restart emacs.
+
