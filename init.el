@@ -12,15 +12,14 @@
  '(custom-safe-themes
    (quote
     ("da8e6e5b286cbcec4a1a99f273a466de34763eefd0e84a41c71543b16cd2efac" default)))
- '(default-frame-alist
-    (quote
-     ((width . 120)
-      (height . 40))))
+ '(default-frame-alist (quote ((width . 120) (height . 40))))
  '(dired-auto-revert-buffer (quote dired-directory-changed-p))
  '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
  '(make-backup-files nil)
- '(package-selected-packages (quote (color-theme-modern php-mode haskell-mode evil)))
+ '(package-selected-packages
+   (quote
+    (toml-mode rust-mode yaml-mode markdown-mode indent-guide org-evil evil-org color-theme-modern php-mode haskell-mode evil)))
  '(scroll-bar-mode nil)
  '(show-trailing-whitespace t)
  '(tool-bar-mode nil))
@@ -35,6 +34,9 @@
 
 (require 'evil)
 (evil-mode 1)
+
+; Consider underscores as part of words.
+(modify-syntax-entry ?_ "w")
 
 ;; Because sometimes we need monospace fonts.
 
