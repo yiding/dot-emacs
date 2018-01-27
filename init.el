@@ -9,9 +9,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(auto-save-default nil)
+ '(column-number-mode t)
  '(custom-safe-themes
    (quote
-    ("da8e6e5b286cbcec4a1a99f273a466de34763eefd0e84a41c71543b16cd2efac" default)))
+    ("57d7e8b7b7e0a22dc07357f0c30d18b33ffcbb7bcd9013ab2c9f70748cfa4838" "da8e6e5b286cbcec4a1a99f273a466de34763eefd0e84a41c71543b16cd2efac" default)))
  '(default-frame-alist (quote ((width . 120) (height . 40))))
  '(dired-auto-revert-buffer (quote dired-directory-changed-p))
  '(global-auto-revert-mode t)
@@ -20,10 +22,12 @@
  '(make-backup-files nil)
  '(package-selected-packages
    (quote
-    (intero toml-mode rust-mode yaml-mode markdown-mode indent-guide org-evil evil-org color-theme-modern php-mode haskell-mode evil)))
+    (flycheck-rust tuareg bazel-mode intero toml-mode rust-mode yaml-mode markdown-mode indent-guide org-evil evil-org color-theme-modern php-mode haskell-mode evil)))
  '(scroll-bar-mode nil)
  '(show-trailing-whitespace t)
- '(tool-bar-mode nil))
+ '(tool-bar-mode nil)
+ '(uniquify-min-dir-content 2)
+ '(vc-handled-backends (quote (RCS CVS SVN SCCS SRC Bzr Git))))
 
 ;; one-off scripts go here.
 (add-to-list 'load-path "~/.emacs.d/scripts")
@@ -34,24 +38,30 @@
 (require 'evil)
 (evil-mode 1)
 
+
 ; Consider underscores as part of words.
 (modify-syntax-entry ?_ "w")
-
-;; Because sometimes we need monospace fonts.
-
-(defun use-monospace ()
-  "Switch the current buffer to a monospace font."
-  (face-remap-add-relative 'default '(:family "Monospace" :height 120)))
 
 ;; Dired hide details by default
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
 ;; Configure some UI specific things.
+
+; Tweak haskell syntax highlighting.
+(defun haskell-mode-tweaks ()
+  (set-face-bold-p 'haskell-definition-face nil)
+  (set-face-bold-p 'haskell-constructor-face nil)
+  (set-face-bold-p 'haskell-type-face nil))
 (when window-system
-  (add-hook 'dired-mode-hook 'use-monospace)
-  (set-face-attribute 'default nil :font "Source Code Pro 12")
-  (set-face-attribute 'variable-pitch nil :font "Linux Libertine O 14")
-  (add-hook 'haskell-mode-hook 'propindent-mode))
+  (set-face-attribute 'default nil :font "Noto Mono 12")
+  (set-face-attribute 'variable-pitch nil :font "Noto Sans Display 12")
+  (set-face-bold-p 'bold nil)
+  (add-hook 'haskell-mode-hook
+	    (lambda ()
+	      (variable-pitch-mode)
+	      (haskell-mode-tweaks)))
+  (add-hook 'rust-mode-hook 'variable-pitch-mode)
+  )
 
 ;; Color theme
 (load-theme 'desert t t)
