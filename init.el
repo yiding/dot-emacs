@@ -16,13 +16,14 @@
     ("57d7e8b7b7e0a22dc07357f0c30d18b33ffcbb7bcd9013ab2c9f70748cfa4838" "da8e6e5b286cbcec4a1a99f273a466de34763eefd0e84a41c71543b16cd2efac" default)))
  '(default-frame-alist (quote ((width . 120) (height . 40))))
  '(dired-auto-revert-buffer (quote dired-directory-changed-p))
+ '(fill-column 80)
  '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
  '(intero-stack-executable "/Users/yiding/.local/bin/stack")
  '(make-backup-files nil)
  '(package-selected-packages
    (quote
-    (flycheck-rust tuareg bazel-mode intero toml-mode rust-mode yaml-mode markdown-mode indent-guide org-evil evil-org color-theme-modern php-mode haskell-mode evil)))
+    (racer flycheck-rust tuareg bazel-mode intero toml-mode rust-mode yaml-mode markdown-mode indent-guide org-evil evil-org color-theme-modern php-mode haskell-mode evil)))
  '(scroll-bar-mode nil)
  '(show-trailing-whitespace t)
  '(tool-bar-mode nil)
@@ -54,14 +55,18 @@
   (set-face-bold-p 'haskell-type-face nil))
 (when window-system
   (set-face-attribute 'default nil :font "Noto Mono 12")
-  (set-face-attribute 'variable-pitch nil :font "Noto Sans Display 12")
+  (set-face-attribute 'variable-pitch nil :family "Noto Sans" :height 120)
   (set-face-bold-p 'bold nil)
   (add-hook 'haskell-mode-hook
 	    (lambda ()
 	      (variable-pitch-mode)
 	      (haskell-mode-tweaks)))
   (add-hook 'rust-mode-hook 'variable-pitch-mode)
+  (add-hook 'python-mode-hook 'variable-pitch-mode)
   )
+
+;; BUCK files are python.
+(add-to-list 'auto-mode-alist '("BUCK\\'" . python-mode))
 
 ;; Color theme
 (load-theme 'desert t t)
