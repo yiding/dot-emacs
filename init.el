@@ -55,6 +55,9 @@
 ; Consider underscores as part of words.
 (modify-syntax-entry ?_ "w")
 
+; don't indent with tabs.
+(setq-default indent-tabs-mode nil)
+
 ; strip trailing whitespace on save.
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
